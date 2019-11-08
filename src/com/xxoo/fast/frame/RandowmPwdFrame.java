@@ -28,6 +28,13 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.xxoo.fast.Tools;
+
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class RandowmPwdFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +47,8 @@ public class RandowmPwdFrame extends JFrame {
 	private JCheckBox upcaseCheckBox;
 	private JCheckBox numberCheckBox;
 	private JCheckBox symbolCheckBox;
+	
+	static RandowmPwdFrame frame;
 
 	/**
 	 * Launch the application.
@@ -48,7 +57,7 @@ public class RandowmPwdFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RandowmPwdFrame frame = new RandowmPwdFrame();
+					frame = new RandowmPwdFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,6 +86,7 @@ public class RandowmPwdFrame extends JFrame {
 		lblNewLabel.setFont(new Font("ËÎÌå", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_1 = new JLabel("\u751F\u6210\u7ED3\u679C");
+		lblNewLabel_1.setIcon(new ImageIcon(RandowmPwdFrame.class.getResource("/conf/return.ico")));
 		lblNewLabel_1.setFont(new Font("ËÎÌå", Font.BOLD, 12));
 		
 		lowerCheckBox = new JCheckBox("a-z");
@@ -148,11 +158,24 @@ public class RandowmPwdFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
+		JButton button_1 = new JButton("·µ»Ø",new ImageIcon(RandowmPwdFrame.class.getResource("/conf/return.ico")));
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				close();
+				new Tools().main(null);
+			}
+		});
+		button_1.setEnabled(false);
+		button_1.setVerticalAlignment(SwingConstants.TOP);
+		button_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		button_1.setVerticalTextPosition(SwingConstants.CENTER);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(83)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(129, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
@@ -178,12 +201,18 @@ public class RandowmPwdFrame extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(button)
 								.addComponent(resultTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(85, Short.MAX_VALUE))
+					.addGap(127))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(549, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(53)
+					.addContainerGap()
+					.addComponent(button_1)
+					.addGap(20)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label)
 						.addComponent(lowerCheckBox)
@@ -201,7 +230,7 @@ public class RandowmPwdFrame extends JFrame {
 						.addComponent(resultTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addComponent(button)
-					.addContainerGap(76, Short.MAX_VALUE))
+					.addContainerGap(119, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		
@@ -253,5 +282,11 @@ public class RandowmPwdFrame extends JFrame {
 //				}
 //			}
 //		});
+	}
+	
+	public void close() {
+		if(contentPane != null && contentPane.isShowing()) {
+			frame.dispose();
+		}
 	}
 }
