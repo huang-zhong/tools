@@ -23,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.xxoo.fast.Tools;
+
 import sun.misc.BASE64Encoder;
 
 public class MD5Frame extends JFrame {
@@ -34,6 +36,7 @@ public class MD5Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private GroupLayout groupLayout;
+	MD5Frame frame;
 
 	/**
 	 * Create the frame.
@@ -62,10 +65,15 @@ public class MD5Frame extends JFrame {
 				"", ""
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class
 			};
-			public Class getColumnClass(int columnIndex) {
+			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
@@ -114,35 +122,47 @@ public class MD5Frame extends JFrame {
 		
 		JLabel label = new JLabel("\u8BF7\u8F93\u5165\u8981\u52A0\u5BC6\u7684\u5B57\u7B26\u4E32\uFF1A");
 		
+		JButton button = new JButton("\u8FD4\u56DE");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				close();
+				Tools window = new Tools();
+				window.frame.setVisible(true);
+			}
+		});
+		
 		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(235)
-					.addComponent(btnMd)
-					.addContainerGap(273, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(44)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 502, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(405, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(66)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(label)
-						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 454, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(63, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(235)
+							.addComponent(btnMd))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(44)
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 502, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(66)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(label)
+								.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 454, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(button))
+					.addContainerGap(37, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(16)
+					.addComponent(button)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(label)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
 					.addComponent(btnMd)
 					.addGap(26)
-					.addComponent(table, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
 					.addGap(55))
 		);
 		
@@ -155,6 +175,7 @@ public class MD5Frame extends JFrame {
 		frame.setVisible(true);
 	}
 	
+	@SuppressWarnings("static-access")
 	public String encryptMD5(String sourceStr) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest messageDigest = null;
 		messageDigest = messageDigest.getInstance("MD5");
@@ -200,6 +221,14 @@ public class MD5Frame extends JFrame {
 			return MD532Upcase(readyEncryptStr).substring(8, 24);
 		}else{
 			return "";
+		}
+	}
+	
+	private void close() {
+		if(frame != null && frame.isShowing()) {
+			frame.setVisible(false);
+		}else {
+			System.out.println("frame is null");
 		}
 	}
 }

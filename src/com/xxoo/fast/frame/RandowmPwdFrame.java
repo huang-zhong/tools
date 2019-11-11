@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -29,11 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.xxoo.fast.Tools;
-
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class RandowmPwdFrame extends JFrame {
 
@@ -163,19 +160,19 @@ public class RandowmPwdFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				close();
-				new Tools().main(null);
+				Tools window = new Tools();
+				window.frame.setVisible(true);
 			}
 		});
-		button_1.setEnabled(false);
 		button_1.setVerticalAlignment(SwingConstants.TOP);
 		button_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		button_1.setVerticalTextPosition(SwingConstants.CENTER);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(129, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(80, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
@@ -202,17 +199,15 @@ public class RandowmPwdFrame extends JFrame {
 								.addComponent(button)
 								.addComponent(resultTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addGap(127))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 					.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(549, Short.MAX_VALUE))
+					.addContainerGap(510, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
 					.addComponent(button_1)
-					.addGap(20)
+					.addGap(30)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label)
 						.addComponent(lowerCheckBox)
@@ -272,21 +267,15 @@ public class RandowmPwdFrame extends JFrame {
 	}
 
 	public void showRandomPwdFrame() {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-					RandowmPwdFrame frame = new RandowmPwdFrame();
-					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+		frame = new RandowmPwdFrame();
+		frame.setVisible(true);
 	}
 	
 	public void close() {
-		if(contentPane != null && contentPane.isShowing()) {
-			frame.dispose();
+		if(frame != null && frame.isShowing()) {
+			frame.setVisible(false);
+		}else {
+			System.out.println("frame is null");
 		}
 	}
 }

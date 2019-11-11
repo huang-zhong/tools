@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 
 public class Tools {
 
-	private JFrame frame;
+	public JFrame frame;
 
 	/**
 	 * Launch the application.
