@@ -1,33 +1,23 @@
 package com.xxoo.fast;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
-import com.xxoo.fast.frame.MD5Frame;
-import com.xxoo.fast.frame.RandowmPwdFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.xxoo.fast.jPanel.IPJPanel;
+import com.xxoo.fast.jPanel.MD5JPanel;
+import com.xxoo.fast.jPanel.RandomPwdJPanel;
 
-public class Tools {
+public class Tools extends JFrame{
 
+	private static final long serialVersionUID = 1L;
 	public JFrame frame;
+	//定义组件	
+	JTabbedPane jtbp; //定义选项卡
+	JPanel MD5jp = null,jp2 = null,jp3 = null;	//定义面板
+
 
 	/**
 	 * Launch the application.
@@ -37,7 +27,8 @@ public class Tools {
 			public void run() {
 				try {
 					Tools window = new Tools();
-					window.frame.setVisible(true);
+					window.jtbp.setVisible(true);
+//					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,74 +40,21 @@ public class Tools {
 	 * Create the application.
 	 */
 	public Tools() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBackground(Color.GREEN);
-		frame.setTitle("\u4E2A\u4EBA\u5DE5\u5177\u6C47\u603B");
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\huangzhong\\Downloads\\70d5639b5f29744464df35aafc3c1fb4.png"));
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{170, 93, 0};
-		gridBagLayout.rowHeights = new int[]{23, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
-		
-		JButton btnNewButton = new JButton("随机密码生成器");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				close();
-				new RandowmPwdFrame().showRandomPwdFrame();
-			}
-		});
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEADING);
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 0;
-		frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
-		
-		JButton btnMd = new JButton("MD5\u52A0\u5BC6");
-		btnMd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				close();
-				new MD5Frame().showMD5Frame();
-			}
-		});
-		GridBagConstraints gbc_btnMd = new GridBagConstraints();
-		gbc_btnMd.anchor = GridBagConstraints.WEST;
-		gbc_btnMd.insets = new Insets(0, 0, 5, 5);
-		gbc_btnMd.gridx = 0;
-		gbc_btnMd.gridy = 1;
-		frame.getContentPane().add(btnMd, gbc_btnMd);
-//		button.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				close();
-//				new RandowmPwdFrame().showRandomPwdFrame();
-//			}
-//		});
-	}
-
-	
-	public void close() {
-		if(frame != null && frame.isShowing()) {
-			frame.dispose();
-		}
+		//创建组件
+		jtbp = new JTabbedPane();
+		jtbp.add("MD5加密",new MD5JPanel());//创建三个面板
+		jtbp.add("随机密码",new RandomPwdJPanel());
+		IPJPanel panel = new IPJPanel();
+		jtbp.add("IP查询",panel);
+		//设置布局管理器
+		//添加组件
+		getContentPane().add(jtbp);
+		//设置界面属性
+		//设置窗体实行
+		this.setTitle("自定义小工具");	//设置界面标题
+		this.setSize(650, 400);		//设置界面像素
+		this.setLocation(300, 200);	//设置界面初始位置
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//设置虚拟机和界面一同关闭
+		this.setVisible(true);	
 	}
 }

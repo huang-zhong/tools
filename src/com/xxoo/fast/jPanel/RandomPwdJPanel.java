@@ -1,8 +1,7 @@
-package com.xxoo.fast.frame;
+package com.xxoo.fast.jPanel;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,17 +10,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -29,12 +25,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.xxoo.fast.Tools;
-
-public class RandowmPwdFrame extends JFrame {
-
+public class RandomPwdJPanel extends JPanel{
+	
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField pwdLengthField;
 	private JTextField textField_1;
 	private JTextField resultTextField;
@@ -43,38 +36,12 @@ public class RandowmPwdFrame extends JFrame {
 	private JCheckBox upcaseCheckBox;
 	private JCheckBox numberCheckBox;
 	private JCheckBox symbolCheckBox;
-	
-	static RandowmPwdFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					frame = new RandowmPwdFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public RandomPwdJPanel(){
+		Initializer(this);
+	}
 
-	/**
-	 * Create the frame.
-	 */
-	public RandowmPwdFrame() {
-		setTitle("\u968F\u673A\u5BC6\u7801\u751F\u6210\u5668");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\huangzhong\\Downloads\\70d5639b5f29744464df35aafc3c1fb4.png"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 598, 343);
-		contentPane = new JPanel();
-		contentPane.setForeground(new Color(0, 0, 0));
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		setContentPane(contentPane);
-		
+	private void Initializer(RandomPwdJPanel jpanel) {
 		JLabel label = new JLabel("\u6240\u6709\u5B57\u7B26");
 		label.setFont(new Font("宋体", Font.BOLD, 12));
 		
@@ -82,7 +49,7 @@ public class RandowmPwdFrame extends JFrame {
 		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_1 = new JLabel("\u751F\u6210\u7ED3\u679C");
-		lblNewLabel_1.setIcon(new ImageIcon(RandowmPwdFrame.class.getResource("/conf/return.ico")));
+		lblNewLabel_1.setIcon(new ImageIcon(RandomPwdJPanel.class.getResource("/conf/return.ico")));
 		lblNewLabel_1.setFont(new Font("宋体", Font.BOLD, 12));
 		
 		lowerCheckBox = new JCheckBox("a-z");
@@ -120,16 +87,16 @@ public class RandowmPwdFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				char[] pwdChar = validCheckBoxSelectState();
 				if(pwdChar.length==0) {
-					JOptionPane.showInternalMessageDialog(contentPane, "请至少选择1种复杂模式", "生成密码失败", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(jpanel, "请至少选择1种复杂模式", "生成密码失败", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				String length = pwdLengthField.getText();
 				if(StringUtils.isEmpty(length)){
-					JOptionPane.showInternalMessageDialog(contentPane, "请输入密码长度","生成密码失败",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showInternalMessageDialog(jpanel, "请输入密码长度","生成密码失败",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				if(!NumberUtils.isNumber(length)) {
-					JOptionPane.showInternalMessageDialog(contentPane, "密码长度非数字","生成密码失败",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showInternalMessageDialog(jpanel, "密码长度非数字","生成密码失败",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				String password = RandomStringUtils.random(Integer.parseInt(length),pwdChar);
@@ -155,20 +122,20 @@ public class RandowmPwdFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		JButton rebackBut = new JButton("返回",new ImageIcon(RandowmPwdFrame.class.getResource("/conf/return.ico")));
-		rebackBut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				close();
-				Tools window = new Tools();
-				window.frame.setVisible(true);
-			}
-		});
-		rebackBut.setVerticalAlignment(SwingConstants.TOP);
-		rebackBut.setHorizontalTextPosition(SwingConstants.CENTER);
-		rebackBut.setVerticalTextPosition(SwingConstants.CENTER);
+//		JButton rebackBut = new JButton("返回",new ImageIcon(RandowmPwdFrame.class.getResource("/conf/return.ico")));
+//		rebackBut.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				close();
+//				Tools window = new Tools();
+//				window.frame.setVisible(true);
+//			}
+//		});
+//		rebackBut.setVerticalAlignment(SwingConstants.TOP);
+//		rebackBut.setHorizontalTextPosition(SwingConstants.CENTER);
+//		rebackBut.setVerticalTextPosition(SwingConstants.CENTER);
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		GroupLayout gl_contentPane = new GroupLayout(jpanel);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -200,13 +167,13 @@ public class RandowmPwdFrame extends JFrame {
 								.addComponent(resultTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addGap(127))
 				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addComponent(rebackBut, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+//					.addComponent(rebackBut, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(510, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(rebackBut)
+//					.addComponent(rebackBut)
 					.addGap(30)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label)
@@ -227,13 +194,13 @@ public class RandowmPwdFrame extends JFrame {
 					.addComponent(button)
 					.addContainerGap(119, Short.MAX_VALUE))
 		);
-		contentPane.setLayout(gl_contentPane);
+		jpanel.setLayout(gl_contentPane);
 		
 		//单元个内容居中
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		
 	}
+	
 	
 	public char[] validCheckBoxSelectState() {
 		boolean lowerState  = lowerCheckBox.isSelected();
@@ -264,18 +231,5 @@ public class RandowmPwdFrame extends JFrame {
 			pwdChar = ArrayUtils.addAll(pwdChar, symbolChar);
 		}
 		return pwdChar;
-	}
-
-	public void showRandomPwdFrame() {
-		frame = new RandowmPwdFrame();
-		frame.setVisible(true);
-	}
-	
-	public void close() {
-		if(frame != null && frame.isShowing()) {
-			frame.setVisible(false);
-		}else {
-			System.out.println("Random password frame is null!");
-		}
 	}
 }

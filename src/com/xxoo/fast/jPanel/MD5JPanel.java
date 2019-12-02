@@ -1,4 +1,4 @@
-package com.xxoo.fast.frame;
+package com.xxoo.fast.jPanel;
 
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -12,9 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -23,29 +22,24 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.xxoo.fast.Tools;
-
 import sun.misc.BASE64Encoder;
 
-public class MD5Frame extends JFrame {
-	Logger log = Logger.getLogger("MD5Frame"); 
-	
-	/**
-	 * 
-	 */
+public class MD5JPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
+	Logger log = Logger.getLogger("MD5JPanel"); 
 	private JTable table;
 	private GroupLayout groupLayout;
-	MD5Frame frame;
 
-	/**
-	 * Create the frame.
-	 */
-	public MD5Frame() {
+	public MD5JPanel() {
+		initialize(this);
+	}
+	
+	private void initialize(MD5JPanel md5jPanel) {
+
 		log.setLevel(Level.INFO);
-		getContentPane().setEnabled(false);
-		setTitle("MD5\u52A0\u5BC6");
-		setBounds(100, 100, 599, 413);
+//		getContentPane().setEnabled(false);
+//		setTitle("MD5\u52A0\u5BC6");
+//		setBounds(100, 100, 599, 413);
 		
 		
 		table = new JTable();
@@ -65,9 +59,6 @@ public class MD5Frame extends JFrame {
 				"", ""
 			}
 		) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
@@ -95,7 +86,8 @@ public class MD5Frame extends JFrame {
 				log.info("开始进行MD5加密：");
 				String sourceStr = textArea.getText();
 				if(StringUtils.isEmpty(sourceStr)) {
-					JOptionPane.showInternalMessageDialog(getContentPane(), "请输入要加密的字符串","MD5加密失败",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(md5jPanel, "请输入要加密的字符串","MD5加密失败",JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				table.setValueAt(sourceStr, 1, 1);//填充“字符串”对应的值
 				
@@ -116,23 +108,11 @@ public class MD5Frame extends JFrame {
 				} catch (UnsupportedEncodingException e1) {
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		
-		JLabel label = new JLabel("\u8BF7\u8F93\u5165\u8981\u52A0\u5BC6\u7684\u5B57\u7B26\u4E32\uFF1A");
 		
-		JButton button = new JButton("\u8FD4\u56DE");
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				close();
-				Tools window = new Tools();
-				window.frame.setVisible(true);
-			}
-		});
-		
-		groupLayout = new GroupLayout(getContentPane());
+		groupLayout = new GroupLayout(md5jPanel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -146,17 +126,14 @@ public class MD5Frame extends JFrame {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(66)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(label)
 								.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 454, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(button))
+						)
 					.addContainerGap(37, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(button)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(label)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
@@ -166,14 +143,10 @@ public class MD5Frame extends JFrame {
 					.addGap(55))
 		);
 		
-		getContentPane().setLayout(groupLayout);
-
+		md5jPanel.setLayout(groupLayout);
 	}
-
-	public void showMD5Frame() {
-		frame = new MD5Frame();
-		frame.setVisible(true);
-	}
+	
+	
 	
 	@SuppressWarnings("static-access")
 	public String encryptMD5(String sourceStr) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -224,11 +197,12 @@ public class MD5Frame extends JFrame {
 		}
 	}
 	
-	private void close() {
-		if(frame != null && frame.isShowing()) {
-			frame.setVisible(false);
-		}else {
-			System.out.println("MD5 frame is null");
-		}
-	}
+	
+//	private void close() {
+//		if(frame != null && frame.isShowing()) {
+//			frame.setVisible(false);
+//		}else {
+//			System.out.println("MD5 frame is null");
+//		}
+//	}
 }
